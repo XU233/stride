@@ -38,13 +38,16 @@ class FilterWavelets(Operator):
         out_wavelets = wavelets.alike(name='filtered_%s' % wavelets.name)
 
         if self.f_min is None and self.f_max is not None:
-            filtered = filters.lowpass_filter_fir(wavelets.extended_data, f_max)
+            # filtered = filters.lowpass_filter_fir(wavelets.extended_data, f_max)
+            filtered = filters.lowpass_filter_butterworth(wavelets.extended_data, f_max)
 
         elif self.f_min is not None and self.f_max is None:
-            filtered = filters.highpass_filter_fir(wavelets.extended_data, f_min)
+            # filtered = filters.highpass_filter_fir(wavelets.extended_data, f_min)
+            filtered = filters.highpass_filter_butterworth(wavelets.extended_data, f_min)
 
         elif self.f_min is not None and self.f_max is not None:
-            filtered = filters.bandpass_filter_fir(wavelets.extended_data, f_min, f_max)
+            # filtered = filters.bandpass_filter_fir(wavelets.extended_data, f_min, f_max)
+            filtered = filters.bandpass_filter_butterworth(wavelets.extended_data, f_min, f_max)
 
         else:
             filtered = wavelets.extended_data

@@ -61,13 +61,16 @@ class FilterTraces(Operator):
         out_traces = traces.alike(name='filtered_%s' % traces.name)
 
         if self.f_min is None and self.f_max is not None:
-            filtered = filters.lowpass_filter_fir(traces.extended_data, f_max)
+            # filtered = filters.lowpass_filter_fir(traces.extended_data, f_max)
+            filtered = filters.lowpass_filter_butterworth(traces.extended_data, f_max)
 
         elif self.f_min is not None and self.f_max is None:
-            filtered = filters.highpass_filter_fir(traces.extended_data, f_min)
+            # filtered = filters.highpass_filter_fir(traces.extended_data, f_min)
+            filtered = filters.highpass_filter_butterworth(traces.extended_data, f_min)
 
         elif self.f_min is not None and self.f_max is not None:
-            filtered = filters.bandpass_filter_fir(traces.extended_data, f_min, f_max)
+            # filtered = filters.bandpass_filter_fir(traces.extended_data, f_min, f_max)
+            filtered = filters.bandpass_filter_butterworth(traces.extended_data, f_min, f_max)
 
         else:
             filtered = traces.extended_data
