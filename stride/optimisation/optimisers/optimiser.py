@@ -37,6 +37,7 @@ class LocalOptimiser(ABC):
 
         self.variable = variable
         self.step_size = kwargs.pop('step_size', 1.)
+        self.next_step_size = None
         self.test_step_size = kwargs.pop('test_step_size', 1.)
         self.dump_grad = kwargs.pop('dump_grad', False)
         self.dump_prec = kwargs.pop('dump_prec', False)
@@ -209,6 +210,7 @@ class LocalOptimiser(ABC):
 
             # update variable
             await self.update_variable(next_step, direction)
+            self.next_step_size = next_step
 
             # post-process variable after update
             await self.post_process(**kwargs)
