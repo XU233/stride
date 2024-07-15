@@ -164,9 +164,6 @@ class LocalOptimiser(ABC):
         step_size = self.step_size if step_size is None else step_size
         step_loop = kwargs.pop('step_loop', None)
         if isinstance(step_size, LineSearch):
-            self.variable.needs_grad = False
-            if hasattr(self.variable, 'push'):
-                await self.variable.push(attr='needs_grad')
             await step_size.init_search(
                 variable=self.variable,
                 direction=direction,
@@ -203,10 +200,6 @@ class LocalOptimiser(ABC):
                     next_step = -max_step * 0.75
                 elif next_step < -0.2:
                     next_step = next_step * 0.25
-
-                self.variable.needs_grad = True
-                if hasattr(self.variable, 'push'):
-                    await self.variable.push(attr='needs_grad')
 
                 logger.perf('\t taking final update step of %e [unclipped step of %e]' % (next_step, unclipped_step))
             else:
