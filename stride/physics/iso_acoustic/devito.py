@@ -21,7 +21,7 @@ from ..problem_type import ProblemTypeBase
 __all__ = ['IsoAcousticDevito']
 
 
-warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
+#warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
 
 
 @mosaic.tessera
