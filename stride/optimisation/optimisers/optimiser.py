@@ -204,12 +204,12 @@ class LocalOptimiser(ABC):
             else:
                 logger.perf('\t taking test step of %e in line search' % next_step)
 
-            self.applied_step_size = next_step
             # restore variable
             self.variable.data[:] = variable_before.data.copy()
 
             # update variable
             await self.update_variable(next_step, direction)
+            self.variable.step_size = next_step
 
             # post-process variable after update
             await self.post_process(**kwargs)
